@@ -7,6 +7,3 @@ python:
 
 script:
   - coverage run test.py
-
-after_success:
-  - codecov
