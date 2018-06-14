@@ -6,4 +6,4 @@ python:
   - 3.6
 
 script:
-  - test.py
+  - python test.py
