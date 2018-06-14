@@ -1,3 +1,4 @@
+import re
 
 class JsonToCbor:
 
@@ -14,7 +15,6 @@ class JsonToCbor:
         """
         length = None
         header = None
-
         if len(value) <= 23:
             header = self.majorTypes["string"] | len(value)
         if 24 <= len(value) <= 255:
@@ -41,7 +41,6 @@ class JsonToCbor:
         """
         header = None
         major_type = None
-
         if value >= 0:
             major_type = self.majorTypes["u_int"]
         if not value >= 0:
@@ -62,5 +61,33 @@ class JsonToCbor:
             if 32 < bit_length <= 64:
                 header = major_type | self.intTypes["int_64"]
             header = "{0:08b}".format(header)
-
             return "{0} {1}".format(header, "{0:08b}".format(value))
+
+    def array_to_cbor(self, value: list) -> str:
+        data = ""
+        header = self.majorTypes["array"] | len(value)
+        header = "{0:08b}".format(header)
+        for elem in value:
+            if type(elem) is str:
+                data += self.text_string_to_cbor(elem) + " "
+            if type(elem) is int:
+                data += self.integer_to_cbor(elem) + " "
+            if type(elem) is list:
+                data += self.array_to_cbor(elem) + " "
+
+        return "{0} {1}".format(header, data[:-1])
+
+
+def convert_bin_str_to_hex(value: str) -> None:
+    words = re.findall(r"[01]+", value)
+    wd = ''
+    for word in words:
+        i = (hex(int(word, 2))[2:])
+        wd += i
+    print(wd)
+    return None
+
+
+instan = JsonToCbor({})
+a = instan.array_to_cbor([1, 2, 3, [56, 76]])
+convert_bin_str_to_hex(a)

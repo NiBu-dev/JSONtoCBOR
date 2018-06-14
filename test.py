@@ -71,5 +71,24 @@ class InputTesCase(unittest.TestCase):
         actual_output = self.conv_inst.integer_to_cbor(input_value)
         self.assertEqual(expected_output, actual_output)
 
+    def test_single_level_array_to_cbor_int(self):
+        input_value = [1, 2, 3, 4]
+        expected_output = "10000100 00000001 00000010 00000011 00000100"
+        actual_output = self.conv_inst.array_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_single_level_array_to_cbor_str(self):
+        input_value = ["first", "second", "third"]
+        expected_output = "10000011 01100101 01100110 01101001 01110010 01110011 01110100 01100110 01110011 01100101 " \
+                          "01100011 01101111 01101110 01100100 01100101 01110100 01101000 01101001 01110010 01100100"
+        actual_output = self.conv_inst.array_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_2level_array_to_cbor_int(self):
+        input_value = [1, 2, 3, [56, 76]]
+        expected_output = "10000100 00000001 00000010 00000011 10000010 00011000 00111000 00011000 01001100"
+        actual_output = self.conv_inst.array_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
 if __name__ == '__main__':
     unittest.main()
