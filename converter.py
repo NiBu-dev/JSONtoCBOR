@@ -23,5 +23,3 @@ class JsonToCbor:
         return "{0} {1}".format(header, value)
 
 
-# insta = JsonToCbor({})
-# print (insta.text_string_to_cbor("somedata"))
