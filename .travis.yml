@@ -6,5 +6,4 @@ python:
   - 3.6
 
 script:
-  - python test.py
-  - pytest
+  - python -m pytest -v test.py
