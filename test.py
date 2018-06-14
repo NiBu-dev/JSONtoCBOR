@@ -35,8 +35,41 @@ class InputTesCase(unittest.TestCase):
         actual_output = self.conv_inst.text_string_to_cbor(input_value)
         self.assertEqual(expected_output, actual_output)
 
-    # def test_int_to_cbor(self):
-    #     input_value = 10
+    def test_small_u_int_to_cbor(self):
+        input_value = 10
+        expected_output = "00001010"
+        actual_output = self.conv_inst.integer_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_big_u_int_to_cbor(self):
+        input_value = 500
+        expected_output = "00011001 111110100"
+        actual_output = self.conv_inst.integer_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_really_big_u_int_to_cbor(self):
+        input_value = 15648956
+        expected_output = "00011010 111011101100100010111100"
+        actual_output = self.conv_inst.integer_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_small_s_int_to_cbor(self):
+        input_value = -10
+        expected_output = "00101001"
+        actual_output = self.conv_inst.integer_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_big_s_int_to_cbor(self):
+        input_value = -500
+        expected_output = "00111001 111110011"
+        actual_output = self.conv_inst.integer_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_really_big_s_int_to_cbor(self):
+        input_value = -15648956
+        expected_output = "00111010 111011101100100010111011"
+        actual_output = self.conv_inst.integer_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
 
 if __name__ == '__main__':
     unittest.main()
