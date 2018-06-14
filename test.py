@@ -19,12 +19,24 @@ class InputTesCase(unittest.TestCase):
         user_input_extension = re.findall(r"\w+.(\w+)", self.io_inst.output)
         self.assertEqual(expected_extension, user_input_extension[0])
 
-    def test_text_str_tp_cbor(self):
+    def test_short_text_str_to_cbor(self):
         input_value = "somedata"
-        expected_output = "1101000 1110011 1101111 1101101 1100101 1100100 1100001 1110100 1100001"
+        expected_output = "01101000 01110011 01101111 01101101 01100101 01100100 01100001 01110100 01100001"
         actual_output = self.conv_inst.text_string_to_cbor(input_value)
         self.assertEqual(actual_output, expected_output)
 
+    def test_medium_text_str_to_cbor(self):
+        input_value = "Once upon a time there was a medium data"
+        expected_output = "01111000 00101000 01001111 01101110 01100011 01100101 00100000 01110101 01110000 01101111 " \
+                          "01101110 00100000 " \
+                          "01100001 00100000 01110100 01101001 01101101 01100101 00100000 01110100 01101000 01100101 " \
+                          "01110010 01100101 00100000 01110111 01100001 01110011 00100000 01100001 00100000 01101101 " \
+                          "01100101 01100100 01101001 01110101 01101101 00100000 01100100 01100001 01110100 01100001"
+        actual_output = self.conv_inst.text_string_to_cbor(input_value)
+        self.assertEqual(expected_output, actual_output)
+
+    # def test_int_to_cbor(self):
+    #     input_value = 10
 
 if __name__ == '__main__':
     unittest.main()
