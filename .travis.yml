@@ -6,4 +6,4 @@ python:
   - 3.6
 
 script:
-  - coverage run test.py
+  - test.py
